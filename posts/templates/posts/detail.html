@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{post.title}}</h1>
+    <p>작성자 {{post.user}}</p>
+    <p>{{post.content}}</p>
+
+    <hr>
+
+    <h3>comment</h3>
+
+
+
+    {% for comment in post.comment_set.all %}
+    <p>{{comment.user}} : {{comment.content}}</p>
+    {% endfor %}
+
+
+    {% if user.is_authenticated %}
+    <form action="{% url 'posts:comments_create' post.id %}" method="POST">
+        {% csrf_token %}
+        {{form}}
+        <input type="submit">
+    </form>
+    {% endif %}
+
+
+{% endblock %}
